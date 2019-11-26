@@ -1,0 +1,14 @@
+{
+  "name": "@redningsselskapet/data-collector",
+  "version": "1.0.0",
+  "description": "Collects data from a datasource on interval ",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test/data-collector.js"
+  },
+  "author": "Bernt Anker (bernt.anker@me.com)",
+  "license": "ISC",
+  "dependencies": {
+    "shortid": "^2.2.15"
+  }
+}
