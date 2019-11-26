@@ -2,6 +2,7 @@ const shortID = require('shortid')
 
 module.exports = ({ fetchDataFunc, interval, name = '', workerFunc }) => {
   let intervalID = null
+  let isRunning = false
   const id = shortID()
   return {
     start: () => {
@@ -11,13 +12,15 @@ module.exports = ({ fetchDataFunc, interval, name = '', workerFunc }) => {
             workerFunc(data)
           })
       }, interval)
+      isRunning = true
     },
     stop: () => {
       clearInterval(intervalID)
       intervalID = null
+      isRunning = false
     },
     isRunning: () => {
-      return intervalID !== null
+      return isRunning
     },
     name: () => {
       return `${name}-${id}`
