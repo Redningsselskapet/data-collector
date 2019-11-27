@@ -1,29 +1,30 @@
 const shortID = require('shortid')
 
 module.exports = ({ fetchDataFunc, interval, name = '', workerFunc }) => {
-  let intervalID = null
-  let isRunning = false
-  const id = shortID()
+  let _intervalID = null
+  let _isRunning = false
+  const _id = shortID()
+  const _start = () => {
+    _intervalID = setInterval(function () {
+      fetchDataFunc().then(data => {
+        workerFunc(data)
+      })
+    }, interval)
+    _isRunning = true
+  }
+
+  const _stop = () => {
+    clearInterval(_intervalID)
+    _isRunning = false
+  }
   return {
     start: () => {
-      intervalID = setInterval(() => {
-        fetchDataFunc()
-          .then(data => {
-            workerFunc(data)
-          })
-      }, interval)
-      isRunning = true
+      _start()
     },
     stop: () => {
-      clearInterval(intervalID)
-      intervalID = null
-      isRunning = false
+      _stop()
     },
-    isRunning: () => {
-      return isRunning
-    },
-    name: () => {
-      return `${name}-${id}`
-    }
+    isRunning: () => _isRunning,
+    name: () => `${name}-${_id}`
   }
 }
