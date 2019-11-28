@@ -1,46 +1,31 @@
 const DataCollector = require('../')
 
 myDataCollector2 = DataCollector({
-  fetchDataFunc: () => Promise.resolve('data2'),
+  fetchDataFunc: () => Promise.resolve('Collect data2'),
   interval: 1000,
-  name: 'jabba dabba',
-  workerFunc: data => console.log('work done on data2')
+  name: 'collector2',
+  workerFunc: data => console.log('Work on data2 done.')
 })
 
-myDataCollector = DataCollector({
-  fetchDataFunc: () => Promise.resolve('data'),
+myDataCollector1 = DataCollector({
+  fetchDataFunc: () => Promise.resolve('Collect data1'),
   interval: 1000,
-  name: 'test-collector',
-  workerFunc: data => console.log('work done on data')
+  name: 'collector1',
+  workerFunc: data => console.log('work on data1 done')
 })
 
 myDataCollector2.start()
-myDataCollector.start()
+myDataCollector1.start()
 
+console.log(myDataCollector1.name())
 console.log(myDataCollector2.name())
-console.log(myDataCollector.name())
-console.log(myDataCollector2.isRunning())
-setTimeout(()=>{myDataCollector.stop()}, 4000)
-setTimeout(()=>myDataCollector2.stop(), 5000)
+console.log('Collector2 is running? ' + myDataCollector2.isRunning())
 
-setTimeout(()=>console.log(myDataCollector.isRunning()), 8000)
-setTimeout(()=>console.log(myDataCollector.isRunning()), 2000)
+setTimeout(()=>{myDataCollector1.stop()}, 2000)
+setTimeout(()=>myDataCollector2.stop(), 7000)
 
-setTimeout(()=>console.log(myDataCollector.isRunning()), 8000)
-setTimeout(()=>console.log(myDataCollector.isRunning()), 2000)
-/*
-const id1 = setInterval(() => {
-  console.log('worker1')
-}, 2000);
+setTimeout(()=>console.log('Collector1 is running? ' + myDataCollector1.isRunning()), 8000)
+setTimeout(()=>console.log('Collector1 is running? ' + myDataCollector1.isRunning()), 2000)
 
-const id2 = setInterval(() => {
-  console.log('worker2')
-}, 2000);
-
-setTimeout(() => {
-  clearInterval(id1)
-}, 4000);
-
-setTimeout(() => {
-  clearInterval(id2)
-}, 8000); */
+setTimeout(()=>console.log('Collector2 is running? ' + myDataCollector2.isRunning()), 8000)
+setTimeout(()=>console.log('Collector1 is running? ' + myDataCollector2.isRunning()), 2000)
